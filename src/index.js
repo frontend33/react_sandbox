@@ -1,4 +1,6 @@
 import { createStore } from "redux"
+
+
 // const initialState = 0
 // Если значение state === undefined значит, что еще нет состояния и функция reducer должна вернуть первоначальное состояние state = 0
 const reducer = (state = 0, action) => {
