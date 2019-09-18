@@ -1,12 +1,14 @@
 import { createStore } from "redux"
 
-
+ 
 // const initialState = 0
 // Если значение state === undefined значит, что еще нет состояния и функция reducer должна вернуть первоначальное состояние state = 0
 const reducer = (state = 0, action) => {
   switch (action.type) {
     case 'INC':
       return state + 1
+    case 'DEC':
+      return state - 1
     // Если функция не знает тип дейстия вернуть state без изменений
     default: 
       return state
@@ -25,7 +27,35 @@ state = reducer(state, { type: 'INC' })
 console.log(state) // 2
 */ 
 
+
+
+
 const store = createStore(reducer)
+document
+  .getElementById('inc')
+  .addEventListener('click', () => {
+    store.dispatch({type: 'INC'})
+  })
+
+  document
+  .getElementById('dec')
+  .addEventListener('click', () => {
+    store.dispatch({type: 'DEC'})
+  })
+
+  // Вызовем функцию каждый раз, когда store обновляется
+  const update = () => {
+    document
+      .getElementById('counter')
+      .innerHTML = store.getState()
+      console.log(store.getState())
+  }
+// store.subscribe позволяет получать нотификации если store изменился как watch в vue
+  store.subscribe(update)
+
+
+/*
+
 // store.subscribe позволяет получать нотификации если store изменился как watch в vue
 store.subscribe(()=> {
   // После каждого изменения метод будет вызываться и будем печатать текущее изменение в console
@@ -34,3 +64,4 @@ store.subscribe(()=> {
 // Попросим store выполнить одно из действий
 store.dispatch({type: 'INC'})
 store.dispatch({type: 'INC'})
+*/
