@@ -99,3 +99,7 @@ store.dispatch(userLoggedIn('Frontend33, 'admin'))
 bindActionCreators() - связывает функцию action creator с функцией dispatch()
 const { add, remove } = bindActionCreators(actions)
 Созданные таким способом функции делают сразу два действия -создание действия (action и отправка в dispatch)
+
+***React и Redux***
+React должен знать когда нужно обновлять компоненты (store.subscribe сообщает о том что state обновился)
+React компоненты должны быть как можно меньше связаны с Redux
