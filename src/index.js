@@ -8,8 +8,13 @@ import * as actions from "./actions";
 const store = createStore(reducer);
 const { dispatch } = store;
 
-// bindActionCreators позволяет обернуть сразу несколько функций
-// Вместо первого аргумента, можем передать объект, ключи этого объекта - названия функции 
+/*
+bindActionCreators позволяет обернуть сразу несколько функций
+Вместо первого аргумента, можем передать объект, ключи этого объекта - названия функции 
+Функции { inc, dec, rnd } которые мы получили из bindActionCreators, а значит функции автоматически dispath
+нужные действия в store. Когда вызываем функцию inc в store попадает событие inc, reducer обновляет внутренний
+state в store и компонент получает нужное значение
+ */
 const { inc, dec, rnd } = bindActionCreators(actions, dispatch);
 
 // Вызовем функцию каждый раз, когда store обновляется
