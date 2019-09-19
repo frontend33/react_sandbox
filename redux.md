@@ -64,3 +64,38 @@ const render = () => {
 В качестве UI может использоваться любая библиотека или фреймворк
 store.dispatch() используется для обновления состояния
 store.subscribe() используется для обновления UI
+
+***Действия с параметрами***
+Кроме типа, любое действие (action) может содержать дополнительную информацию:
+```
+store.dispath({
+  type: `USER_LOGGED_IN`,
+  name: 'test',
+  role: 'admin
+})
+```
+Часто дополнительные параметры передаютя в поле payload
+
+***Action Creator***
+
+Action Creator - функция которая создает объекты action (Упрощает код)
+
+```
+const userLoggedIn = (name, role) => {
+  return { type: 'USER_LOGGED_IN',name,role}
+}
+
+store.dispatch(userLoggedIn('Frontend33, 'admin'))
+```
+
+***Action Creator***
+
+Структура проекта
+Есть несколько подходов к структуре Redux проектов
+
+Один из подходов - вынести reducer функции и action creator функции в отдельные файлы или папки
+
+***bindActionCreators()***
+bindActionCreators() - связывает функцию action creator с функцией dispatch()
+const { add, remove } = bindActionCreators(actions)
+Созданные таким способом функции делают сразу два действия -создание действия (action и отправка в dispatch)

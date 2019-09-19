@@ -1,46 +1,43 @@
-import { createStore } from "redux"
-
- 
-// const initialState = 0
-// Если значение state === undefined значит, что еще нет состояния и функция reducer должна вернуть первоначальное состояние state = 0
-const reducer = (state = 0, action) => {
-  switch (action.type) {
-    case 'INC':
-      return state + 1
-    case 'DEC':
-      return state - 1
-    // Если функция не знает тип дейстия вернуть state без изменений
-    default: 
-      return state
-  }
-}
-/*
-указываем что хотим выполнить действие с типом increment
-Когда работаем с redux, actions самый обычный js объект, у него может быть любая структура,
-но главное чтобы у этого поля было поля была строка, которая указывает тип действия который мы пытаемся соверщить
-
-let state = reducer(undefined, {})
-state = reducer(state, { type: 'INC' })
-console.log(state) // 1
-
-state = reducer(state, { type: 'INC' })
-console.log(state) // 2
-*/ 
-
-
-
+import { createStore, bindActionCreators } from "redux"
+import reducer from './reducer'
+import * as actions from './actions'
 
 const store = createStore(reducer)
+const { dispatch } = store
+
+
+// bindActionCreators Похожа на нашу функцию
+// const bindActionCreator = (creator,dispatch) => (...args) => {
+//   dispatch(creator(...args))
+// }
+
+// bindActionCreators позволяет обернуть сразу несколько функций
+// Вместо первого аргумента, можем передать объект, ключи этого объекта - названия функции 
+// const { incDispatch, decDispatch, rndDispatch } = bindActionCreators({
+//   incDispatch: inc,
+//   decDispatch: dec,
+//   rndDispatch: rnd
+// }, dispatch)
+
+const { inc, dec, rnd } = bindActionCreators(actions, dispatch)
+
+// const incDispatch = () => bindActionCreators(inc,dispatch)
+// const decDispatch = () => bindActionCreators(dec,dispatch)
+// const rndDispatch = (payload) => bindActionCreators(rnd, dispatch)
+
 document
   .getElementById('inc')
-  .addEventListener('click', () => {
-    store.dispatch({type: 'INC'})
-  })
+  .addEventListener('click', inc)
 
-  document
+document
   .getElementById('dec')
+  .addEventListener('click', dec)
+
+document
+  .getElementById('rnd')
   .addEventListener('click', () => {
-    store.dispatch({type: 'DEC'})
+    const payload = + Math.floor(Math.random()*10)
+    rnd(payload)
   })
 
   // Вызовем функцию каждый раз, когда store обновляется
