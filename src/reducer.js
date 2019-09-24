@@ -1,6 +1,6 @@
 // const initialState = 0
 // Если значение state === undefined значит, что еще нет состояния и функция reducer должна вернуть первоначальное состояние state = 0
-const reducer = (state = 0, action) => {
+const reducer = (state = 15, action) => {
     switch (action.type) {
       case 'INC':
         return state + 1

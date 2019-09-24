@@ -1,12 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, bindActionCreators } from "redux";
-import Counter from "./counter";
+import { Provider } from 'react-redux'
+import App from './components/app'
+import Counter from "./components/counter";
 import reducer from "./reducer";
-import * as actions from "./actions";
+
+
+// Компонент Provider из react-redux внутри себя реализует подписку на изменение store, и делает так чтобы наше значение обновлялось
 
 const store = createStore(reducer);
-const { dispatch } = store;
+
+ReactDOM.render(
+  <Provider store={store}>
+  <App/>
+  </Provider>
+  ,
+  document.getElementById("root")
+);
 
 /*
 bindActionCreators позволяет обернуть сразу несколько функций
@@ -15,24 +26,13 @@ bindActionCreators позволяет обернуть сразу несколь
 нужные действия в store. Когда вызываем функцию inc в store попадает событие inc, reducer обновляет внутренний
 state в store и компонент получает нужное значение
  */
-const { inc, dec, rnd } = bindActionCreators(actions, dispatch);
+// const { inc, dec, rnd } = bindActionCreators(actions, dispatch);
 
 // Вызовем функцию каждый раз, когда store обновляется
-const update = () => {
-  ReactDOM.render(
-    <Counter
-      counter={store.getState()}
-      inc={inc}
-      dec={dec}
-      rnd={() => {
-        const value = Math.floor(Math.random() * 10);
-        rnd(value);
-      }}
-    />,
-    document.getElementById("root")
-  );
-};
+// const update = () => {
+
+// };
 // store.subscribe позволяет получать нотификации если store изменился как watch в vue
 // В первый раз отрисуем вручную
-update()
-store.subscribe(update);
+// update()
+// store.subscribe(update);

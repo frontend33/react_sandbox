@@ -103,3 +103,54 @@ const { add, remove } = bindActionCreators(actions)
 ***React и Redux***
 React должен знать когда нужно обновлять компоненты (store.subscribe сообщает о том что state обновился)
 React компоненты должны быть как можно меньше связаны с Redux
+
+***react-redux и функция connect ()***
+react-redux упрощает инетнрацию react + redux 
+Provider делает store доступным всему дереву компонентов (через контекст)
+
+```
+const store = createStore(reducer);
+
+ReactDOM.render(
+  <Provider store={store}>
+  <App/>
+  </Provider>
+  ,
+  document.getElementById("root")
+);
+
+```
+
+connect() - компонент высшего порядка, который передает значения из store в компонент 
+```
+connect mapStateToProps = (state) => {
+  return { name: state.name, age: state.age }
+}
+
+export default connect(mapStateToProps)(MyComponent)
+
+```
+
+***mapDispatchToProps***
+
+mapDispatchToProps второй аргумент для функции connect()
+
+```
+const mapDispatchToProps = (dispatch) => {
+  return {
+    inc: () => dispatch({type: 'INC'})
+  }
+}
+```
+Созданные функции будут переданы в компонент. Таким способом компонент может обновить состояние в store
+
+***mapDispatchToProps как объект***
+Action Creator не обязательно должен быть чистой функцией
+Если второй аргумент connect() это объект connect(mapStateToProps, actions)(MyComponent)
+То результат будет таким же как для кода с функцией
+```
+connect(
+  mapStateToProps,
+  (dispatch) => bindActionCreators(ations,dispatch)(MyComponent)
+)
+```
